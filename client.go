@@ -6,16 +6,22 @@ import (
 	"net"
 	"os"
 	"os/signal"
+	"strconv"
 )
 
 var ch chan int = make(chan int)
 
 func main() {
 
+	count := 10
+	if len(os.Args) > 1 {
+		count, _ = strconv.Atoi(os.Args[1])
+	}
+
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt, os.Kill)
 
-	for i := 0; i < 10; i++ {
+	for i := 0; i < count; i++ {
 		go Conn()
 	}
 
