@@ -15,7 +15,7 @@ func main() {
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt, os.Kill)
 
-	for i := 0; i < 10000; i++ {
+	for i := 0; i < 10; i++ {
 		go Conn()
 	}
 
@@ -34,6 +34,6 @@ func Conn() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(b[:n])
+	fmt.Println(string(b[:n]))
 }
 
