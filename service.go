@@ -28,10 +28,10 @@ func main() {
 func handleConnection(conn net.Conn) {
 	defer conn.Close()
 	for {
-		//_, err := conn.Write(send)
-		//if err != nil {
-		//	return
-		//}
+		_, err := conn.Write(send)
+		if err != nil {
+			return
+		}
 		time.Sleep(10 * time.Second)
 	}
 }

@@ -35,16 +35,15 @@ func Conn() {
 		return	
 	}
 	defer conn.Close()
-	//b := make([]byte, 10)
-	//_, err = conn.Read(b)
-	//if err != nil {
-	//	fmt.Println("read err: ", err)
-	//	return	
-	//}
-	//cc := make(chan struct{}, 1)
-	//<-cc
-	// fmt.Println(string(b[:n]))
+
 	for {
-		time.Sleep(100 * time.Second)
+		b := make([]byte, 10)
+		_, err = conn.Read(b)
+		if err != nil {
+			fmt.Println("read err: ", err)
+			return
+		}
+		time.Sleep(10 * time.Second)
 	}
+	fmt.Println("close ?????")
 }
