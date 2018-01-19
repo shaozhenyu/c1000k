@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-var send []byte = []byte("aaaaa")
+var send []byte = []byte("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 
 func main() {
 	ln, err := net.Listen("tcp", "0.0.0.0:8080")

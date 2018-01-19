@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	//"log"
 	"net"
@@ -9,6 +10,8 @@ import (
 	"strconv"
 	"time"
 )
+
+var quitSemaphore chan bool
 
 func main() {
 
@@ -36,14 +39,25 @@ func Conn() {
 	}
 	defer conn.Close()
 
-	for {
-		b := make([]byte, 10)
-		_, err = conn.Read(b)
-		if err != nil {
-			fmt.Println("read err: ", err)
-			return
-		}
-		time.Sleep(10 * time.Second)
-	}
+	go messageRecived(conn)
+
+	b := []byte("time\n")
+	conn.Write(b)
+
+	<-quitSemaphore
 	fmt.Println("close ?????")
+}
+
+func messageRecived(conn net.Conn) {
+	reader := bufio.NewReader(conn)
+	for {
+		msg, err := reader.ReadString('\n')
+		if err != nil {
+			quitSemaphore <- true
+			break
+		}
+		time.Sleep(time.Second)
+		b := []byte(msg)
+		conn.Write(b)
+	}
 }
