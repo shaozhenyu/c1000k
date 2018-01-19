@@ -2,14 +2,13 @@ package main
 
 import (
 	"fmt"
-	"log"
+	//"log"
 	"net"
 	"os"
 	"os/signal"
 	"strconv"
+	"time"
 )
-
-var ch chan int = make(chan int)
 
 func main() {
 
@@ -30,16 +29,22 @@ func main() {
 }
 
 func Conn() {
-	conn, err := net.Dial("tcp", "127.0.0.1:8080")
+	conn, err := net.Dial("tcp", "192.168.100.156:8080")
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println("conn err: ", err)
+		return	
 	}
 	defer conn.Close()
-	b := make([]byte, 10)
-	n, err := conn.Read(b)
-	if err != nil {
-		log.Fatal(err)
+	//b := make([]byte, 10)
+	//_, err = conn.Read(b)
+	//if err != nil {
+	//	fmt.Println("read err: ", err)
+	//	return	
+	//}
+	//cc := make(chan struct{}, 1)
+	//<-cc
+	// fmt.Println(string(b[:n]))
+	for {
+		time.Sleep(100 * time.Second)
 	}
-	fmt.Println(string(b[:n]))
 }
-
